@@ -1,0 +1,174 @@
+<html><head><base href="/">
+<style>
+body {
+    background-color: #000;
+    color: #93a09e;
+    font-family: 'Courier New', monospace;
+    margin: 0;
+    padding: 20px;
+    min-height: 100vh;
+    overflow-y: auto;
+}
+
+.terminal {
+    max-width: 800px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+    padding-bottom: 40px;
+}
+
+.logo {
+    width: 300px;
+    height: 300px;
+    margin: 20px auto;
+    display: block;
+}
+
+.ascii-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+    opacity: 0.1;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+@keyframes matrix {
+    0% { transform: translateY(-100%); }
+    100% { transform: translateY(100vh); }
+}
+
+.terminal-text {
+    border-left: 2px solid #93a09e;
+    padding-left: 10px;
+    margin: 20px 0;
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    50% { border-color: transparent; }
+}
+
+.button {
+    background: #93a09e;
+    color: #000;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin: 10px 5px;
+    transition: all 0.3s;
+    display: inline-block;
+    text-decoration: none;
+    font-family: 'Courier New', monospace;
+    font-size: 1em;
+}
+
+.button:hover {
+    background: #7a8684;
+    transform: scale(1.05);
+}
+</style>
+</head>
+<body>
+
+<div class="ascii-bg" id="asciiBackground"></div>
+
+<div class="terminal">
+    <img src="/a/8c116b47-e91c-4817-97bb-91ebca1c28a9" alt="Pumpkinus Maximus - ASCII art style pumpkin logo in dot matrix pattern" class="logo">
+    
+    <pre style="color: #93a09e; text-align: center; font-size: 12px; line-height: 1.2;">
+
+   ▄███████▄ ███    █▄    ▄▄▄▄███▄▄▄▄      ▄███████▄   ▄▄▄▄███▄▄▄▄      ▄████████ ▀████    ▐████▀ 
+  ███    ███ ███    ███ ▄██▀▀▀███▀▀▀██▄   ███    ███ ▄██▀▀▀███▀▀▀██▄   ███    ███   ███▌   ████▀  
+  ███    ███ ███    ███ ███   ███   ███   ███    ███ ███   ███   ███   ███    ███    ███  ▐███    
+  ███    ███ ███    ███ ███   ███   ███   ███    ███ ███   ███   ███   ███    ███    ▀███▄███▀    
+▀█████████▀  ███    ███ ███   ███   ███ ▀█████████▀  ███   ███   ███ ▀███████████    ████▀██▄     
+  ███        ███    ███ ███   ███   ███   ███        ███   ███   ███   ███    ███   ▐███  ▀███    
+  ███        ███    ███ ███   ███   ███   ███        ███   ███   ███   ███    ███  ▄███     ███▄  
+ ▄████▀      ████████▀   ▀█   ███   █▀   ▄████▀       ▀█   ███   █▀    ███    █▀  ████       ███▄ 
+                                                                                                  
+
+    </pre>
+    
+    <div class="terminal-text">
+        <h1>PUMPKINUS MAXIMUS</h1>
+        <p>Welcome to the spookiest memecoin in the cryptoverse</p>
+        <pre>
+$ npm install pumpkinus-maximus
+Installing... [█████████████████████] 100%
+        </pre>
+    </div>
+
+    <div class="stats">
+        <h2>> TOKEN METRICS_</h2>
+        <p>Total Supply: 1,000,000,000 $PUMPMAX</p>
+        <p>LP: Burnt and Locked</p>
+        <p>Tax: 0% buy/sell</p>
+    </div>
+
+    <button class="button">BUY $PUMPMAX</button>
+    <button class="button">JOIN TELEGRAM</button>
+    <a href="https://twitter.com/pumpkinusmax" class="button">FOLLOW ON TWITTER</a>
+</div>
+
+<script>
+const createAsciiBackground = () => {
+    const bg = document.getElementById('asciiBackground');
+    const characters = ['🎃', '0', '1', '$', '#', '@', '*', '=', '+', '.', 'P', 'U', 'M', 'P', 'K'];
+    
+    const createCharacter = () => {
+        const element = document.createElement('div');
+        element.style.position = 'absolute';
+        element.style.left = Math.random() * 100 + 'vw';
+        element.style.top = '-20px';
+        element.style.color = '#93a09e';
+        element.style.opacity = Math.random() * 0.5;
+        element.style.fontSize = Math.random() * 10 + 10 + 'px';
+        element.textContent = characters[Math.floor(Math.random() * characters.length)];
+        element.style.animation = `matrix ${Math.random() * 5 + 2}s linear`;
+        
+        bg.appendChild(element);
+        
+        setTimeout(() => {
+            element.remove();
+        }, 7000);
+    };
+
+    // Create initial set of characters
+    for(let i = 0; i < 50; i++) {
+        setTimeout(() => {
+            createCharacter();
+        }, i * 100);
+    }
+
+    // Continue creating new characters
+    setInterval(createCharacter, 100);
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+    createAsciiBackground();
+});
+
+const terminalTexts = document.querySelectorAll('.terminal-text p');
+terminalTexts.forEach(text => {
+    const originalText = text.textContent;
+    text.textContent = '';
+    let i = 0;
+    
+    const typeWriter = () => {
+        if (i < originalText.length) {
+            text.textContent += originalText.charAt(i);
+            i++;
+            setTimeout(typeWriter, 50);
+        }
+    };
+    
+    typeWriter();
+});
+</script>
+
+</body></html>
